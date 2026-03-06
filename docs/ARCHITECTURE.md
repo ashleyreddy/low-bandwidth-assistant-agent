@@ -3,7 +3,9 @@
 ## Server
 
 - `app/api/routes.py`: feed, action, and voice command APIs.
-- `app/connectors/`: source adapters (currently mock).
+- `app/connectors/gmail_connector.py`: live Gmail multi-account connector via OAuth refresh tokens.
+- `app/connectors/slack_connector.py`: live Slack connector via bot token/channel polling.
+- `app/connectors/mock_connectors.py`: fallback connectors for unconfigured sources.
 - `app/services/feed_service.py`: aggregates connector data.
 - `app/services/summarizer.py`: low-bandwidth summary strategy.
 - `app/services/command_parser.py`: transcript -> structured command.

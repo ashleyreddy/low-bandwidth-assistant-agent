@@ -1,20 +1,25 @@
 from __future__ import annotations
 
 from app.connectors.base import Connector
+from app.connectors.gmail_connector import GmailConnector
 from app.connectors.mock_connectors import (
     MockGDriveConnector,
     MockGmailConnector,
     MockGooglePhotosConnector,
     MockSlackConnector,
 )
+from app.connectors.slack_connector import SlackConnector
 from app.models.schemas import ActionRequest, ActionResult, FeedResponse
 
 
 class FeedService:
     def __init__(self) -> None:
+        gmail = GmailConnector.from_env()
+        slack = SlackConnector.from_env()
+
         self.connectors: list[Connector] = [
-            MockGmailConnector(),
-            MockSlackConnector(),
+            gmail if gmail else MockGmailConnector(),
+            slack if slack else MockSlackConnector(),
             MockGDriveConnector(),
             MockGooglePhotosConnector(),
         ]

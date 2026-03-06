@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from app.connectors.base import Connector
 from app.models.schemas import (
@@ -27,7 +27,7 @@ class MockGmailConnector(Connector):
                 title="Invoice is ready",
                 body=body,
                 summary=shortest_message_or_summary(body),
-                received_at=datetime.now(UTC) - timedelta(minutes=7),
+                received_at=datetime.now(timezone.utc) - timedelta(minutes=7),
             )
         ]
 
@@ -54,7 +54,7 @@ class MockSlackConnector(Connector):
                 title="New Slack mention",
                 body=body,
                 summary=shortest_message_or_summary(body),
-                received_at=datetime.now(UTC) - timedelta(minutes=2),
+                received_at=datetime.now(timezone.utc) - timedelta(minutes=2),
             )
         ]
 
@@ -82,7 +82,7 @@ class MockGooglePhotosConnector(Connector):
                 body=caption,
                 summary=shortest_message_or_summary(caption),
                 preview_url="https://example.com/mock-receipt.jpg",
-                received_at=datetime.now(UTC) - timedelta(minutes=1),
+                received_at=datetime.now(timezone.utc) - timedelta(minutes=1),
             )
         ]
 
@@ -110,7 +110,7 @@ class MockGDriveConnector(Connector):
                 body=body,
                 summary=shortest_message_or_summary(body),
                 preview_url="https://example.com/mock-drive-doc.jpg",
-                received_at=datetime.now(UTC) - timedelta(minutes=5),
+                received_at=datetime.now(timezone.utc) - timedelta(minutes=5),
             )
         ]
 

@@ -4,7 +4,7 @@ A two-part assistant system:
 - `server/`: FastAPI backend with connector adapters (Gmail, Slack, Google Drive, Google Photos).
 - `ios/LowBandwidthAssistant/`: iOS SwiftUI client with feed actions and voice commands.
 
-The backend currently ships with mock connectors so the app runs immediately. Replace mocks with OAuth-powered connectors for production.
+The backend auto-uses real Gmail and Slack connectors when credentials are set, and falls back to mocks when not configured.
 
 ## Features
 
@@ -24,6 +24,10 @@ pip install -r requirements.txt
 cp .env.example .env
 uvicorn app.main:app --reload
 ```
+
+Connector behavior:
+- Gmail: live via `GMAIL_ACCOUNTS_JSON` (multi-account OAuth refresh tokens), otherwise mock.
+- Slack: live via `SLACK_BOT_TOKEN` + `SLACK_CHANNEL_IDS`, otherwise mock.
 
 Endpoints:
 - `GET /healthz`
@@ -53,7 +57,8 @@ Update `baseURL` in `APIClient.swift` to your server address before running on d
 
 ## Production Integration Notes
 
-- Gmail / GDrive / Photos: use Google OAuth 2.0 with per-account token storage.
-- Slack: use Events API + Web API for action operations.
+- Gmail: requires OAuth scope `https://www.googleapis.com/auth/gmail.modify`.
+- Slack: bot token needs scopes for reading history and posting messages (`channels:history`, `groups:history`, `chat:write`).
+- GDrive / Photos: still mock in this scaffold.
 - Add webhook handlers or polling workers for near-real-time delivery.
 - Store events in Postgres and push updates via WebSockets for mobile efficiency.
