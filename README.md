@@ -29,6 +29,28 @@ Connector behavior:
 - Gmail: live via `GMAIL_ACCOUNTS_JSON` (multi-account OAuth refresh tokens), otherwise mock.
 - Slack: live via `SLACK_BOT_TOKEN` + `SLACK_CHANNEL_IDS`, otherwise mock.
 
+### Gmail OAuth Token Bootstrap
+
+Use the included script to generate a Gmail refresh token for each account.
+
+1. Create OAuth credentials in Google Cloud (Desktop app), then download `client_secret.json`.
+2. Run:
+
+```bash
+cd server
+source .venv/bin/activate
+python scripts/gmail_oauth_bootstrap.py --client-secrets ~/Downloads/client_secret.json
+```
+
+3. Sign in with the Gmail account and approve access.
+4. Copy the printed JSON entry and append it into your `.env` `GMAIL_ACCOUNTS_JSON` array.
+
+Example:
+
+```env
+GMAIL_ACCOUNTS_JSON=[{"account":"ops@company.com","client_id":"...","client_secret":"...","refresh_token":"..."},{"account":"finance@company.com","client_id":"...","client_secret":"...","refresh_token":"..."}]
+```
+
 Endpoints:
 - `GET /healthz`
 - `GET /v1/feed`
