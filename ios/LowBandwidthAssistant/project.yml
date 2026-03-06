@@ -1,0 +1,25 @@
+name: LowBandwidthAssistant
+options:
+  bundleIdPrefix: com.ashleyreddy
+  deploymentTarget:
+    iOS: "17.0"
+settings:
+  SWIFT_VERSION: "5.10"
+targets:
+  LowBandwidthAssistant:
+    type: application
+    platform: iOS
+    sources:
+      - LowBandwidthAssistant
+    info:
+      path: LowBandwidthAssistant/Info.plist
+      properties:
+        CFBundleDisplayName: Low Bandwidth Assistant
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        NSSpeechRecognitionUsageDescription: Voice commands are used to control message actions.
+        NSMicrophoneUsageDescription: Microphone is required for voice commands.
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.ashleyreddy.lowbandwidthassistant
+    scheme:
+      testTargets: []
