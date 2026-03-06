@@ -3,6 +3,7 @@
 A two-part assistant system:
 - `server/`: FastAPI backend with connector adapters (Gmail, Slack, Google Drive, Google Photos).
 - `ios/LowBandwidthAssistant/`: iOS SwiftUI client with feed actions and voice commands.
+- `desktop/`: Python Tkinter desktop client for feed/actions/voice-command execution.
 
 The backend auto-uses real Gmail and Slack connectors when credentials are set, and falls back to mocks when not configured.
 
@@ -68,6 +69,19 @@ open LowBandwidthAssistant.xcodeproj
 ```
 
 Update `baseURL` in `APIClient.swift` to your server address before running on device.
+
+## Desktop Quickstart
+
+```bash
+cd /home/ros2/low-bandwidth-assistant
+python3 desktop/client.py
+```
+
+The desktop app defaults to `http://127.0.0.1:8000` and supports:
+- feed refresh + auto-refresh
+- message actions (reply/forward/spam/archive)
+- image actions (send to Ramp/move account)
+- running transcript-based voice commands via `/v1/voice/command`
 
 ## Voice Command Examples
 
