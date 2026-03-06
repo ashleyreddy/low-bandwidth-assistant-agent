@@ -35,6 +35,12 @@ class FeedResponse(BaseModel):
     items: list[FeedItem]
 
 
+class ConnectorStatus(BaseModel):
+    source: SourceType
+    implementation: str
+    mode: Literal["live", "mock"]
+
+
 class MessageAction(str, Enum):
     reply = "reply"
     forward = "forward"

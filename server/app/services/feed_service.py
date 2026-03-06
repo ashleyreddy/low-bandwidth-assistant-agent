@@ -9,7 +9,7 @@ from app.connectors.mock_connectors import (
     MockSlackConnector,
 )
 from app.connectors.slack_connector import SlackConnector
-from app.models.schemas import ActionRequest, ActionResult, FeedResponse
+from app.models.schemas import ActionRequest, ActionResult, ConnectorStatus, FeedResponse, SourceType
 
 
 class FeedService:
@@ -23,6 +23,19 @@ class FeedService:
             MockGDriveConnector(),
             MockGooglePhotosConnector(),
         ]
+
+    def connector_status(self) -> list[ConnectorStatus]:
+        statuses: list[ConnectorStatus] = []
+        for connector in self.connectors:
+            mode = "mock" if connector.__class__.__name__.startswith("Mock") else "live"
+            statuses.append(
+                ConnectorStatus(
+                    source=SourceType(connector.name),
+                    implementation=connector.__class__.__name__,
+                    mode=mode,
+                )
+            )
+        return statuses
 
     async def fetch_feed(self) -> FeedResponse:
         items = []

@@ -55,6 +55,7 @@ GMAIL_ACCOUNTS_JSON=[{"account":"ops@company.com","client_id":"...","client_secr
 Endpoints:
 - `GET /healthz`
 - `GET /v1/feed`
+- `GET /v1/connectors` (shows live vs mock connector mode)
 - `POST /v1/items/{item_id}/action`
 - `POST /v1/voice/command`
 

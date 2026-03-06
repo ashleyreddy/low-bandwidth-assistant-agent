@@ -200,7 +200,7 @@ class DesktopApp:
                 items = self.client.feed()
                 self.root.after(0, lambda: self._set_items(items))
             except Exception as exc:
-                self.root.after(0, lambda: self._error(f"Refresh failed: {exc}"))
+                self.root.after(0, lambda e=exc: self._error(f"Refresh failed: {e}"))
 
         threading.Thread(target=worker, daemon=True).start()
 
@@ -238,7 +238,7 @@ class DesktopApp:
                 detail = result.get("detail", "Action completed")
                 self.root.after(0, lambda: self.status_text.set(detail))
             except Exception as exc:
-                self.root.after(0, lambda: self._error(f"Action failed: {exc}"))
+                self.root.after(0, lambda e=exc: self._error(f"Action failed: {e}"))
 
         threading.Thread(target=worker, daemon=True).start()
 
@@ -265,7 +265,7 @@ class DesktopApp:
                     return
                 self.root.after(0, lambda: self._execute_voice(item_id, command, target, body))
             except Exception as exc:
-                self.root.after(0, lambda: self._error(f"Voice parse failed: {exc}"))
+                self.root.after(0, lambda e=exc: self._error(f"Voice parse failed: {e}"))
 
         threading.Thread(target=worker, daemon=True).start()
 
